@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\scene">
+      <UniqueIdentifier>{37e773d9-44e3-4d95-a056-2d1852a1b88d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{1c282646-cc71-448a-8ea8-977ba1fbb311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\config">
+      <UniqueIdentifier>{0ea0147b-80c5-4915-9102-4f7ca8cab6f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\manage">
+      <UniqueIdentifier>{effb43e2-369d-450a-a2be-4c0edc50ebf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\view">
+      <UniqueIdentifier>{d7f6014e-79d9-479c-a11e-f19c4f01d3e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\role">
+      <UniqueIdentifier>{8dd0a92c-23ac-4b49-9605-a97dbc19e3d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\lib">
+      <UniqueIdentifier>{9fa6de94-153a-4a69-a2ff-da381f744014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\map">
+      <UniqueIdentifier>{51c8e9b4-f8b3-4eae-91c2-d16625fa9b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\props">
+      <UniqueIdentifier>{10839714-6cec-4f67-bf2a-3237c9246c6c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\scene\GameStartScene.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Cocos2d-x\cocos2d-x-3.10\tests\cpp-tests\Classes\VisibleRect.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\manage\GameManage.cpp">
+      <Filter>src\manage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\view\MapView.cpp">
+      <Filter>src\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Chess\Classes\manager\EventManager.cpp">
+      <Filter>src\manage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\scene\GameConductScene.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\utils\GameFileUtils.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\role\Enemy.cpp">
+      <Filter>src\role</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\role\Player.cpp">
+      <Filter>src\role</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\utils\DirectorUtils.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\role\RoleNode.cpp">
+      <Filter>src\role</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\role\GameAnimation.cpp">
+      <Filter>src\role</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\role\PlayerControlNode.cpp">
+      <Filter>src\role</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\utils\DisplayTools.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\lib\MenuItemSpriteLib.cpp">
+      <Filter>src\lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\map\MapItem.cpp">
+      <Filter>src\map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\props\GameProps.cpp">
+      <Filter>src\props</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\scene\GameStartScene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\utils\DirectorUtils.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Cocos2d-x\cocos2d-x-3.10\tests\cpp-tests\Classes\VisibleRect.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\config\MapConfig.h">
+      <Filter>src\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\manage\GameManage.h">
+      <Filter>src\manage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\config\GmaeConfig.h">
+      <Filter>src\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\view\MapView.h">
+      <Filter>src\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Chess\Classes\manager\EventManager.h">
+      <Filter>src\manage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\scene\GameConductScene.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\utils\GameFileUtils.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\role\Enemy.h">
+      <Filter>src\role</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\role\Player.h">
+      <Filter>src\role</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\role\RoleNode.h">
+      <Filter>src\role</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\role\GameAnimation.h">
+      <Filter>src\role</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\role\PlayerControlNode.h">
+      <Filter>src\role</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\utils\DisplayTools.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\lib\MenuItemSpriteLib.h">
+      <Filter>src\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\map\MapItem.h">
+      <Filter>src\map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\props\GameProps.h">
+      <Filter>src\props</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
