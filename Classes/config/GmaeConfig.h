@@ -72,6 +72,12 @@ std::vector<std::string> const PROP_NAMES = {
 		"zdan_red4.png"
 };
 
+std::vector<std::vector<int>> const PROP_Z_DAN_VALUE = {
+	{1,20},
+	{8,30},
+	{12,40}
+};
+
 std::string const Cache_Current_Level = "currentLevel";
 std::string const EVENT_GAME_STATUS_CHANGE = "EVENT_GAME_STATUS_CHANGE";
 std::string const EVENT_PLAYER_MOVE = "EVENT_PLAYER_MOVE";

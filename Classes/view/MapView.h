@@ -24,6 +24,7 @@ private:
 	void drawFloor(size_t row, size_t col);
 	void drawPlayer(size_t row, size_t col);
 	void drawEnemy(size_t row, size_t col);
+	void drawProps(size_t row, size_t col);
 	void addMapItem(Node* child,int mapType, size_t col);
 	size_t _currentlevel;
 	size_t _nextlevel;

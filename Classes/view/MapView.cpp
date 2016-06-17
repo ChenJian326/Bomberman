@@ -62,7 +62,7 @@ void MapView::showMap()
 				drawFloor(row, column);
 				break;
 			case MAP_TYPE::PROPS:
-				drawBox(row, column);
+				drawProps(row, column);
 				break;
 			case MAP_TYPE::PLAYER:
 				drawPlayer(row, column);
@@ -81,6 +81,12 @@ void MapView::drawBox(size_t row, size_t col) {
 	auto box = Sprite::create("map2.png");
 	box->setPosition(Vec2(col * MAP_UTILE, row * MAP_UTILE));
 	this->addMapItem(box, MAP_TYPE::BOX, row);
+}
+//ªÊ÷∆ƒæœ‰
+void MapView::drawProps(size_t row, size_t col) {
+	auto box = Sprite::create("map2.png");
+	box->setPosition(Vec2(col * MAP_UTILE, row * MAP_UTILE));
+	this->addMapItem(box, MAP_TYPE::PROPS, row);
 }
 //ªÊ÷∆µÿ∞Â
 void MapView::drawFloor(size_t row, size_t col) {

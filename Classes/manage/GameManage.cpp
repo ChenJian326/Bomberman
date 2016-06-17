@@ -37,10 +37,17 @@ void GameManage::continueGame()
 
 void GameManage::checkGameStatus()
 {
+	if (this->getPlayer()->isDeath()) {
+		this->endGame();
+	}
 }
 
 void GameManage::endGame()
 {
+	this->clearMapItems();
+	this->_player = nullptr;
+	_gameMapData.clear();
+	_enemyItems.clear();
 	this->setStatus(GameStatus::END);
 }
 
@@ -60,25 +67,48 @@ void GameManage::clearMapItems()
 	{
 		for each (auto item in var)
 		{
+			item->removeChild();
+			item->removeProps();
 			delete item;
 		}
 	}
 	this->_mapItems.clear();
 }
 
-void GameManage::clearMapItem(size_t row, size_t col)
+void GameManage::clearMapItem(MapItem* item, int injuryValue, size_t col, size_t row)
 {
-	auto item = this->_mapItems[row][col];
-	auto mapType = this->_gameMapData[MAP_ROW_NUMBER - row - 1][col];
-	if (mapType == MAP_TYPE::PROPS && item->getMapType() == MAP_TYPE::BOX)
+	auto mapType = item->getMapType();
+	if (mapType == MAP_TYPE::PROPS && item->getChild())
 	{
 		size_t propType = random(0, 2);
 		item->addProp(propType);
 		item->removeChild();
 	}
-	else if(item->getMapType() == MAP_TYPE::PLAYER || item->getMapType() == MAP_TYPE::ENEMY)
+	else if (mapType == MAP_TYPE::BOX)
 	{
+		item->clear();
+	}
+	else
+	{
+		MapItem* role = this->getHitMapItem(col, row);
+		if (role) {
+			role->InjuryRole(injuryValue);
+			CCLOG("Injury Role %d", injuryValue);
+		}
+		this->checkGameStatus();
+	}
+}
 
+void GameManage::collectProps(MapItem * item, size_t col, size_t row)
+{
+	auto mapType = item->getMapType();
+	if (mapType == MAP_TYPE::PROPS && nullptr == item->getChild())
+	{
+		item->clear();
+	}
+	MapItem* role = this->getHitMapItem(col, row);
+	if (role) {
+		CCLOG("%D get props", role->getMapType());
 	}
 }
 
@@ -92,9 +122,9 @@ void GameManage::pushMapItem(MapItem * item, size_t row)
 	this->_mapItems.at(row).push_back(item);
 }
 
-void GameManage::addBomb(size_t row, size_t col)
-{
-}
+//void GameManage::addProps(size_t row, size_t col)
+//{
+//}
 
 
 void GameManage::setCurrentLevel(size_t level)
@@ -125,13 +155,14 @@ bool GameManage::isBox(size_t mapType)
 	}
 	return isBox;
 }
+
 bool GameManage::isPlayer(size_t col, size_t row)
 {
 	bool isPlayer = false;
 	auto player = this->getPlayer();
 	if (nullptr != player) {
-		size_t c = player->getPositionX() / MAP_UTILE;
-		size_t r = player->getPositionY() / MAP_UTILE;
+		size_t c = player->getChild()->getPositionX() / MAP_UTILE;
+		size_t r = player->getChild()->getPositionY() / MAP_UTILE;
 		if (c == col && row == r)
 		{
 			isPlayer = true;
@@ -140,7 +171,24 @@ bool GameManage::isPlayer(size_t col, size_t row)
 	return isPlayer;
 }
 
-Node * GameManage::getPlayer()
+bool GameManage::isEnemy(size_t col, size_t row)
+{
+	bool isEnemy = false;
+	this->initEnemyItems();
+	for each (auto item in _enemyItems)
+	{
+		size_t c = item->getChild()->getPositionX() / MAP_UTILE;
+		size_t r = item->getChild()->getPositionY() / MAP_UTILE;
+		if (c == col && row == r)
+		{
+			isEnemy = true;
+			break;
+		}
+	}
+	return isEnemy;
+}
+
+MapItem * GameManage::getPlayer()
 {
 	if (nullptr == _player)
 	{
@@ -149,13 +197,53 @@ Node * GameManage::getPlayer()
 			for each (auto item in items)
 			{
 				if (item->getMapType() == MAP_TYPE::PLAYER) {
-					_player = item->getChild();
+					_player = item;
 					break;
 				}
 			}
 		}
 	}
 	return _player;
+}
+//敌人有很多个所以用数组保存起来
+//传入敌人类型来获取
+MapItem * GameManage::getEnemy(int enemyType)
+{
+	this->initEnemyItems();
+	size_t size = _enemyItems.size();
+	MapItem* enemy = nullptr;
+	if (enemyType == -1 && size > 0)
+	{
+		enemy = _enemyItems.at(0);
+	}
+	else
+	{
+		for each (auto item in _enemyItems)
+		{
+			if (item->getMapType() == enemyType) {
+				enemy = item;
+				break;
+			}
+		}
+	}
+	return enemy;
+}
+
+MapItem * GameManage::getEnemy(size_t col, size_t row)
+{
+	MapItem * enemy = nullptr;
+	this->initEnemyItems();
+	for each (auto item in _enemyItems)
+	{
+		size_t c = item->getChild()->getPositionX() / MAP_UTILE;
+		size_t r = item->getChild()->getPositionY() / MAP_UTILE;
+		if (c == col && row == r)
+		{
+			enemy = item;
+			break;
+		}
+	}
+	return enemy;
 }
 
 void GameManage::setStatus(size_t status)
@@ -166,4 +254,34 @@ void GameManage::setStatus(size_t status)
 		DirectorUtils::runScene(GameConductScene::createScene());
 	}
 	EventManager::getIns()->dispatchEvent(EVENT_GAME_STATUS_CHANGE, &_status);
+}
+
+void GameManage::initEnemyItems()
+{
+	size_t size = _enemyItems.size();
+	if (size <= 0)
+	{
+		for each (auto items in this->_mapItems)
+		{
+			for each (auto item in items)
+			{
+				if (item->getMapType() == MAP_TYPE::ENEMY) {
+					_enemyItems.push_back(item);
+				}
+			}
+		}
+	}
+}
+
+MapItem * GameManage::getHitMapItem(size_t col, size_t row)
+{
+	MapItem * item = nullptr;
+	if (this->isPlayer(col, row)) {
+		item = this->getPlayer();
+	}
+	else
+	{
+		item = this->getEnemy(col, row);
+	}
+	return item;
 }

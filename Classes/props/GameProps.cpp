@@ -2,8 +2,10 @@
 #include "config\MapConfig.h"
 #include "manage\GameManage.h"
 #define PLAY_TIME  6
+
 GameProps::GameProps()
-	:_explosionRange(0)
+	:_explosionRange(0),
+	_injuryValue(0)
 {
 }
 
@@ -60,21 +62,21 @@ void GameProps::playExplosion()
 		auto rightItem = items[row][col + i];
 		auto topItem = items[row + i][col];
 		auto bottomItem = items[row - i][col];
-		if (leftItem->getMapType() != MAP_TYPE::FLOOR){
+		if (leftItem->getMapType() != MAP_TYPE::FLOOR) {
 			this->playExplosionAnimation(Direction::LEFT, i);
-			manage->clearMapItem(row, col - i);
+			manage->clearMapItem(leftItem, _injuryValue, col - i, row);
 		}
 		if (rightItem->getMapType() != MAP_TYPE::FLOOR) {
 			this->playExplosionAnimation(Direction::RIGHT, i);
-			manage->clearMapItem(row, col + i);
+			manage->clearMapItem(rightItem, _injuryValue, col + i, row);
 		}
 		if (topItem->getMapType() != MAP_TYPE::FLOOR) {
 			this->playExplosionAnimation(Direction::TOP, i);
-			manage->clearMapItem(row + i, col);
+			manage->clearMapItem(topItem, _injuryValue, col, row + i);
 		}
 		if (bottomItem->getMapType() != MAP_TYPE::FLOOR) {
 			this->playExplosionAnimation(Direction::BOTOOM, i);
-			manage->clearMapItem(row - i, col);
+			manage->clearMapItem(bottomItem, _injuryValue, col, row - i);
 		}
 	}
 }
@@ -88,6 +90,8 @@ void GameProps::setPropType(size_t type)
 	}
 	else
 	{
+		std::vector<int> injuryValue = PROP_Z_DAN_VALUE.at(type - 2);
+		_injuryValue = random(injuryValue.at(0), injuryValue.at(1));
 		this->_gameProp = GameAnimation::creatAnimation(PROP_Z_DAN[type - 3]);
 		dynamic_cast<GameAnimation*>(this->_gameProp)->play(PLAY_TIME, 1);
 		dynamic_cast<GameAnimation*>(this->_gameProp)->setFinishFunc(std::bind(&GameProps::animationFinish, this));

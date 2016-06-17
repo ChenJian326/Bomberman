@@ -24,6 +24,7 @@ private:
 	Node* _gameProp;
 	size_t _propType;
 	size_t _explosionRange;
+	int _injuryValue;
 };
 
 

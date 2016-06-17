@@ -7,7 +7,7 @@ RoleNode::RoleNode()
 	_isBox(false),
 	_isMove(true),
 	_isPlayer(false),
-	_gameMapData(GameManage::getIns()->getGameMapData())
+	_TotalHealth(0)
 {
 }
 
@@ -120,6 +120,7 @@ void RoleNode::setHealth(size_t health)
 {
 	this->_health = health;
 	this->_isDeath = this->_health <= 0;
+	CCLOG("health = %d", health);
 	if (this->_isDeath)
 		this->roleDeath();
 }
@@ -174,7 +175,8 @@ void RoleNode::stopMove()
 bool RoleNode::isMove(Vec2 pos)
 {
 	_isMove = false;
-	auto items = _gameMapData;
+	auto manager = GameManage::getIns();
+	auto items = manager->getMapItems();
 	auto row = pos.y / MAP_UTILE;
 	auto col = pos.x / MAP_UTILE;
 	_rowAndCol = Vec2(col, row);
@@ -187,11 +189,12 @@ bool RoleNode::isMove(Vec2 pos)
 		Vec2 vec2 = this->getColAndRow(_rowAndCol);
 		row = (size_t)vec2.y;
 		col = (size_t)vec2.x;
-		auto manager = GameManage::getIns();
-		auto item = items[MAP_ROW_NUMBER - row - 1][col];
-		_isMove = manager->isEmptyFloor(item, row,col);
-		_isBox = manager->isBox(item);
+		
+		auto item = items[row][col];
+		_isMove = manager->isEmptyFloor(item->getMapType(), row,col);
+		_isBox = manager->isBox(item->getMapType()) || (item->getMapType() == MAP_TYPE::PROPS && item->getChild());
 		_isPlayer = manager->isPlayer(col,row);
+		manager->collectProps(item, col, row);
 		CCLOG("<Player::isMove>row = %d  col = %d", (size_t)row, (size_t)col);
 	}
 	return _isMove;
@@ -211,4 +214,9 @@ void RoleNode::updateMovePos(float dt)
 		if (this->_moveFunc)
 			this->_moveFunc(_rowAndCol);
 	}
+}
+
+void RoleNode::setTotalHealth(size_t health)
+{
+	this->_TotalHealth = health;
 }

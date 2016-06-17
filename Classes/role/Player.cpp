@@ -41,6 +41,7 @@ void Player::initListener()
 	eventManage->addEventListener(EVENT_PLAYER_PUT_BOMB, "", [=](EventCustom* event) {
 		auto prop = GameProps::createProps(PropType::PROP_Z_DAN_1);
 		prop->setPosition(this->getPosition());
+		prop->setExplosionRange(2);
 		this->getParent()->addChild(prop);
 	}, this);
 }

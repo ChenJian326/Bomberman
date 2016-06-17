@@ -21,6 +21,7 @@ public:
 	void setRoleType(int type);
 	int getRoleType() const { return _roleType; };
 	size_t getHealth() const{ return _health; };
+	size_t getTotalHealth() const { return _TotalHealth; };
 	bool isDeath() const { return _isDeath; };
 	size_t getSpeed() const { return _speed; };
 	Vec2 getColAndRow(Vec2 colRow);
@@ -36,16 +37,17 @@ private:
 	Direction _currentDirection;
 	size_t _speed;
 	size_t _health;
+	size_t _TotalHealth;
 	bool _isDeath;
 	float _moveX;
 	float _moveY;
 	GameAnimation* _roleAnimation;
 	int _roleType;
 	std::function<void(Vec2 pos)> _moveFunc;
-	Vector2_Size_t _gameMapData;
 	Vec2 _roleBiasPos;
 	Vec2 _rowAndCol;
 protected:
+	void setTotalHealth(size_t health);
 	bool _isMove;
 	bool _isBox;
 	bool _isPlayer;
